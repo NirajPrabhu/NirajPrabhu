@@ -5,12 +5,7 @@ class AerospacePortfolio {
         this.currentTypeIndex = 0;
         this.isTyping = false;
         this.typingPhrases = [
-            "Aeronautical Engineer",
-            "Flight Control Specialist",
-            "Aerospace Systems Expert",
-            "CFD Analysis Specialist",
-            "Research & Development Engineer",
-            "MATLAB/Simulink Expert"
+            "Aeronautical Engineer"
         ];
 
         this.initializeApp();
