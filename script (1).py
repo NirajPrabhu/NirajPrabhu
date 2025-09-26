@@ -1,4 +1,5 @@
-// Professional Aerospace Portfolio JavaScript - Enhanced with Formspree Integration
+# Updated JavaScript file with enhanced Formspree form handling
+js_content = """// Professional Aerospace Portfolio JavaScript - Enhanced with Formspree Integration
 
 class AerospacePortfolio {
     constructor() {
@@ -12,7 +13,7 @@ class AerospacePortfolio {
             "Research & Development Engineer",
             "MATLAB/Simulink Expert"
         ];
-
+        
         this.initializeApp();
     }
 
@@ -50,12 +51,12 @@ class AerospacePortfolio {
             this.navbar = document.getElementById('navbar');
             this.navLinks = document.querySelectorAll('.nav-link');
             this.lastScrollY = window.scrollY;
-
+            
             if (!this.navbar || this.navLinks.length === 0) {
                 console.warn('Navigation elements not found');
                 return;
             }
-
+            
             this.navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     try {
@@ -63,7 +64,7 @@ class AerospacePortfolio {
                         const targetId = link.getAttribute('href').substring(1);
                         this.scrollToSection(targetId);
                         this.updateActiveNavLink(targetId);
-
+                        
                         // Close mobile menu if open
                         const navMenu = document.getElementById('navMenu');
                         if (navMenu && navMenu.classList.contains('active')) {
@@ -92,13 +93,13 @@ class AerospacePortfolio {
 
     handleNavbarScroll() {
         const currentScrollY = window.scrollY;
-
+        
         if (currentScrollY > this.lastScrollY && currentScrollY > 100) {
             this.navbar.classList.add('hidden');
         } else {
             this.navbar.classList.remove('hidden');
         }
-
+        
         this.lastScrollY = currentScrollY;
     }
 
@@ -108,7 +109,7 @@ class AerospacePortfolio {
             if (targetSection) {
                 const navbarHeight = this.navbar ? this.navbar.offsetHeight : 0;
                 const targetPosition = targetSection.offsetTop - navbarHeight - 20;
-
+                
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -123,11 +124,11 @@ class AerospacePortfolio {
         try {
             const scrollProgress = document.getElementById('scrollProgress');
             if (!scrollProgress) return;
-
+            
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / docHeight) * 100;
-
+            
             scrollProgress.style.width = `${Math.min(scrollPercent, 100)}%`;
         } catch (error) {
             console.error('Scroll progress error:', error);
@@ -139,17 +140,17 @@ class AerospacePortfolio {
             if (!activeId) {
                 const sections = document.querySelectorAll('section[id]');
                 const scrollPos = window.scrollY + 100;
-
+                
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.offsetHeight;
-
+                    
                     if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                         activeId = section.id;
                     }
                 });
             }
-
+            
             this.navLinks.forEach(link => {
                 const linkTarget = link.getAttribute('href').substring(1);
                 if (linkTarget === activeId) {
@@ -201,7 +202,7 @@ class AerospacePortfolio {
             const typeText = () => {
                 try {
                     const currentPhrase = this.typingPhrases[currentPhraseIndex];
-
+                    
                     if (isDeleting) {
                         typingElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
                         currentCharIndex--;
@@ -298,12 +299,12 @@ class AerospacePortfolio {
     setupProjectCards() {
         try {
             const projectCards = document.querySelectorAll('.project-card');
-
+            
             projectCards.forEach(card => {
                 card.addEventListener('mouseenter', () => {
                     card.style.transform = 'translateY(-8px)';
                 });
-
+                
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
                 });
@@ -319,7 +320,7 @@ class AerospacePortfolio {
             const contactForm = document.getElementById('contactForm');
             const submitBtn = document.getElementById('submitBtn');
             const formMessage = document.getElementById('formMessage');
-
+            
             if (!contactForm) {
                 console.warn('Contact form not found');
                 return;
@@ -327,22 +328,22 @@ class AerospacePortfolio {
 
             contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-
+                
                 try {
                     // Show loading state
                     this.setFormLoading(true);
                     this.hideFormMessage();
-
+                    
                     // Get form data
                     const formData = new FormData(contactForm);
-
+                    
                     // Validate form
                     if (!this.validateForm(formData)) {
                         this.setFormLoading(false);
                         this.showFormMessage('Please fill in all required fields.', 'error');
                         return;
                     }
-
+                    
                     // Submit to Formspree
                     const response = await fetch('https://formspree.io/f/xzzjzwda', {
                         method: 'POST',
@@ -351,7 +352,7 @@ class AerospacePortfolio {
                             'Accept': 'application/json'
                         }
                     });
-
+                    
                     if (response.ok) {
                         // Success
                         this.showFormMessage('Thank you for your message! I will get back to you soon.', 'success');
@@ -362,7 +363,7 @@ class AerospacePortfolio {
                         console.error('Formspree error:', errorData);
                         this.showFormMessage('There was an error sending your message. Please try again or contact me directly.', 'error');
                     }
-
+                    
                 } catch (error) {
                     console.error('Form submission error:', error);
                     this.showFormMessage('There was an error sending your message. Please check your connection and try again.', 'error');
@@ -377,7 +378,7 @@ class AerospacePortfolio {
                 input.addEventListener('blur', () => {
                     this.validateField(input);
                 });
-
+                
                 input.addEventListener('input', () => {
                     if (input.classList.contains('error')) {
                         this.validateField(input);
@@ -392,46 +393,46 @@ class AerospacePortfolio {
 
     validateForm(formData) {
         const requiredFields = ['name', 'email', 'subject', 'message'];
-
+        
         for (const field of requiredFields) {
             const value = formData.get(field);
             if (!value || value.trim() === '') {
                 return false;
             }
         }
-
+        
         // Email validation
         const email = formData.get('email');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
         if (!emailRegex.test(email)) {
             return false;
         }
-
+        
         return true;
     }
 
     validateField(field) {
         const value = field.value.trim();
         const fieldType = field.type;
-
+        
         // Remove existing error state
         field.classList.remove('error');
-
+        
         // Check if required field is empty
         if (field.required && value === '') {
             field.classList.add('error');
             return false;
         }
-
+        
         // Email validation
         if (fieldType === 'email' && value !== '') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
             if (!emailRegex.test(value)) {
                 field.classList.add('error');
                 return false;
             }
         }
-
+        
         return true;
     }
 
@@ -440,7 +441,7 @@ class AerospacePortfolio {
             const submitBtn = document.getElementById('submitBtn');
             const btnText = submitBtn.querySelector('.btn-text');
             const btnLoading = submitBtn.querySelector('.btn-loading');
-
+            
             if (isLoading) {
                 submitBtn.disabled = true;
                 submitBtn.classList.add('loading');
@@ -461,11 +462,11 @@ class AerospacePortfolio {
         try {
             const formMessage = document.getElementById('formMessage');
             if (!formMessage) return;
-
+            
             formMessage.textContent = message;
             formMessage.className = `form-message ${type}`;
             formMessage.style.display = 'block';
-
+            
             // Auto-hide success messages after 5 seconds
             if (type === 'success') {
                 setTimeout(() => {
@@ -493,14 +494,14 @@ class AerospacePortfolio {
         try {
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
-
+            
             if (!navToggle || !navMenu) return;
-
+            
             navToggle.addEventListener('click', () => {
                 navMenu.classList.toggle('active');
                 navToggle.classList.toggle('active');
             });
-
+            
             // Close menu when clicking outside
             document.addEventListener('click', (e) => {
                 if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
@@ -560,4 +561,10 @@ window.addEventListener('error', (e) => {
 
 window.addEventListener('unhandledrejection', (e) => {
     console.error('Unhandled promise rejection:', e.reason);
-});
+});"""
+
+# Save updated JavaScript file
+with open('app.js', 'w', encoding='utf-8') as f:
+    f.write(js_content)
+
+print("✅ Updated app.js with enhanced Formspree form handling!")

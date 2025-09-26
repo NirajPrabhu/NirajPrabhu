@@ -1,4 +1,5 @@
-/* Professional Aerospace Portfolio Styles - Enhanced with Form Validation */
+# Enhanced CSS with form validation styling and improved visual feedback
+css_content = """/* Professional Aerospace Portfolio Styles - Enhanced with Form Validation */
 
 /* Root Variables */
 :root {
@@ -11,18 +12,18 @@
     --pure-white: #ffffff;
     --text-dark: #212121;
     --text-light: #757575;
-
+    
     /* Accent Colors */
     --accent-blue: #2196f3;
     --success-green: #4caf50;
     --warning-orange: #ff9800;
     --error-red: #f44336;
-
+    
     /* Shadows */
     --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
     --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
     --shadow-heavy: 0 8px 24px rgba(0,0,0,0.2);
-
+    
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
@@ -837,7 +838,7 @@ section {
     .navbar .container {
         padding: 1rem 20px;
     }
-
+    
     .nav-menu {
         position: fixed;
         top: 100%;
@@ -852,75 +853,75 @@ section {
         transition: all var(--transition-medium);
         pointer-events: none;
     }
-
+    
     .nav-menu.active {
         transform: translateY(0);
         opacity: 1;
         pointer-events: all;
     }
-
+    
     .nav-toggle {
         display: flex;
     }
-
+    
     .nav-toggle.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
-
+    
     .nav-toggle.active span:nth-child(2) {
         opacity: 0;
     }
-
+    
     .nav-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(7px, -6px);
     }
-
+    
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
-
+    
     .btn {
         width: 100%;
         max-width: 300px;
         justify-content: center;
     }
-
+    
     .stats-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .timeline::before {
         left: 30px;
     }
-
+    
     .timeline-item {
         flex-direction: row !important;
         padding-left: 80px;
     }
-
+    
     .timeline-marker {
         left: 30px;
         transform: translateX(-50%);
     }
-
+    
     .timeline-content {
         width: 100%;
     }
-
+    
     .skills-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .contact-content {
         grid-template-columns: 1fr;
     }
-
+    
     .footer-content {
         flex-direction: column;
         text-align: center;
     }
-
+    
     .footer-links {
         justify-content: center;
     }
@@ -930,15 +931,15 @@ section {
     .container {
         padding: 0 15px;
     }
-
+    
     .projects-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .project-card {
         padding: 1.5rem;
     }
-
+    
     .contact-form-container {
         padding: 1.5rem;
     }
@@ -962,20 +963,39 @@ section {
     .contact-form-container {
         display: none;
     }
-
+    
     body {
         background: white;
         color: black;
     }
-
+    
     .hero-section {
         background: white;
         min-height: auto;
         padding: 2rem 0;
     }
-
+    
     section {
         padding: 2rem 0;
         break-inside: avoid;
     }
-}
+}"""
+
+# Save updated CSS file
+with open('style.css', 'w', encoding='utf-8') as f:
+    f.write(css_content)
+
+print("✅ Updated style.css with enhanced form validation styling!")
+print("\n🎯 All files updated with Formspree integration:")
+print("   • index.html - Updated contact form with Formspree endpoint")
+print("   • app.js - Enhanced form handling with validation and error messages")
+print("   • style.css - Added form validation styles and visual feedback")
+print("\n📧 Your contact form is now connected to: https://formspree.io/f/xzzjzwda")
+print("✨ Features added:")
+print("   • Real-time form validation")
+print("   • Professional success/error messages")
+print("   • Loading states during submission")
+print("   • Spam protection with honeypot field")
+print("   • Responsive form design")
+print("   • Error handling for network issues")
+print("\n📝 Messages sent through your portfolio will now go directly to your email!")

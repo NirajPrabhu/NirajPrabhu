@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+# Updated HTML file with Formspree integration
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -64,7 +65,7 @@
                 <div class="about-text">
                     <p class="about-summary">Aeronautical Engineer specializing in aerospace systems, flight control, and computational analysis. Experience with HAL AFCS group and DRDO research, currently pursuing MSc in Air Transport Systems at ENAC Toulouse.</p>
                     <p>Experienced aerospace engineer with demonstrated expertise in flight control systems, computational fluid dynamics, and aircraft system analysis. Proven track record in research and development at premier aerospace organizations including Hindustan Aeronautics Limited and DRDO.</p>
-
+                    
                     <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-number" data-target="2">0</div>
@@ -210,7 +211,7 @@
                         <p class="skill-description">Data analysis, automation, and machine learning</p>
                     </div>
                 </div>
-
+                
                 <div class="skills-category">
                     <h3>Professional Skills</h3>
                     <div class="skill-item">
@@ -366,7 +367,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="contact-form-container">
                     <form class="contact-form" action="https://formspree.io/f/xzzjzwda" method="POST" id="contactForm">
                         <div class="form-group">
@@ -387,12 +388,12 @@
                         </div>
                         <!-- Formspree honeypot for spam protection -->
                         <input type="text" name="_gotcha" style="display:none !important">
-
+                        
                         <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
                             <span class="btn-text">Send Message</span>
                             <span class="btn-loading" style="display: none;">Sending...</span>
                         </button>
-
+                        
                         <!-- Success/Error Messages -->
                         <div class="form-message" id="formMessage" style="display: none;"></div>
                     </form>
@@ -420,4 +421,10 @@
 
     <script src="app.js"></script>
 </body>
-</html>
+</html>"""
+
+# Save updated HTML file
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("✅ Updated index.html with Formspree integration!")
