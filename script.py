@@ -1,0 +1,198 @@
+# Let's create the updated HTML, CSS, and JavaScript files with the profile picture popover feature
+
+# First, let's create the HTML with the profile popover structure
+html_content = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niraj Prabhu - Aeronautical Engineer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="aerospace-portfolio">
+        <!-- Header -->
+        <header class="header">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <span id="nameClick" class="logo-name">Niraj Prabhu</span>
+                    <!-- Profile Picture Popover -->
+                    <div id="profilePopover" class="profile-popover hidden">
+                        <img src="https://via.placeholder.com/80x80/4A90E2/FFFFFF?text=NP" alt="Niraj Prabhu" class="profile-image">
+                        <div class="profile-info">
+                            <span class="profile-name">Niraj Prabhu</span>
+                            <span class="profile-title">Aeronautical Engineer</span>
+                        </div>
+                    </div>
+                </div>
+                <nav class="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Hi, I'm <span class="highlight">Niraj Prabhu</span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    <span id="typingText">Aeronautical Engineer</span>
+                </h2>
+                <p class="hero-description">
+                    Aerospace Systems Specialist focusing on flight control, computational analysis, and innovative engineering solutions
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="#projects" class="btn btn-secondary">View Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p class="about-summary">
+                        Experienced aerospace engineer with demonstrated expertise in flight control systems, 
+                        computational fluid dynamics, and aircraft system analysis. Proven track record in 
+                        research and development at premier aerospace organizations including Hindustan 
+                        Aeronautics Limited and DRDO.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - Present</div>
+                        <div class="timeline-content">
+                            <h3>Graduate Apprentice Trainee</h3>
+                            <h4>Hindustan Aeronautics Limited (HAL)</h4>
+                            <p>Conducted actuator failure analysis, developed numerical models using MATLAB/Simulink, 
+                            analyzed flight test data for helicopter performance optimization.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023</div>
+                        <div class="timeline-content">
+                            <h3>Research Intern</h3>
+                            <h4>DRDO</h4>
+                            <p>Conducted numerical analysis of aircraft hydraulic systems, investigated water hammer 
+                            phenomenon using CFD, and collaborated on hydraulic system reliability studies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Hybrid Renewable Energy System</h3>
+                        <p>Designed innovative hybrid system combining solar PV and wind turbine technologies 
+                        with IoT-based monitoring and control.</p>
+                        <div class="project-tags">
+                            <span class="tag">Renewable Energy</span>
+                            <span class="tag">IoT</span>
+                            <span class="tag">Control Systems</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>CFD Analysis of Hydraulic Systems</h3>
+                        <p>Comprehensive computational fluid dynamics study investigating transient pressure 
+                        surges in aircraft hydraulic systems.</p>
+                        <div class="project-tags">
+                            <span class="tag">CFD</span>
+                            <span class="tag">Hydraulics</span>
+                            <span class="tag">Aircraft Systems</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Electric All-Terrain Vehicle</h3>
+                        <p>Led design and development of electric ATV for SAE E-BAJA competition, focusing 
+                        on powertrain optimization and vehicle dynamics.</p>
+                        <div class="project-tags">
+                            <span class="tag">Electric Vehicle</span>
+                            <span class="tag">SAE Competition</span>
+                            <span class="tag">Vehicle Dynamics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>prabhu.1niraj@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+33 7 53 35 07 70</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Toulouse, France</span>
+                        </div>
+                    </div>
+                    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-file-pdf"></i></a>
+                    </div>
+                    <p>&copy; 2025 Niraj Prabhu. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>'''
+
+# Save the HTML file
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("✅ Created index.html with profile popover structure")
