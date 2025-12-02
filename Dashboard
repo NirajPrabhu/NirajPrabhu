@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --color-background: #f8f9fa;
+            --color-surface: #ffffff;
+            --color-text: #1a1a1a;
+            --color-text-secondary: #6c757d;
+            --color-primary: #00205b;
+            --color-primary-hover: #001847;
+            --color-accent: #0085ca;
+            --color-success: #28a745;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            --color-border: #dee2e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--color-primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--color-primary);
+            background: rgba(0, 32, 91, 0.05);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(0, 133, 202, 0.1);
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #006fa8;
+        }
+
+        .btn-secondary {
+            background: var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: #ced4da;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-green {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-yellow {
+            background: rgba(255, 193, 7, 0.1);
+            color: #d39e00;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .status-red {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--color-danger);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .heatmap {
+            display: grid;
+            /* initial fallback; will be overridden dynamically based on programmes */
+            grid-template-columns: 150px repeat(4, 1fr) 150px;
+            gap: 0;
+            margin-top: 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .heatmap-cell {
+            padding: 0.75rem;
+            border-right: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.85rem;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .heatmap-header {
+            background: var(--color-primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .heatmap-label {
+            background: #f8f9fa;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .heat-high {
+            background: rgba(220, 53, 69, 0.2);
+            color: var(--color-danger);
+            font-weight: 600;
+        }
+
+        .heat-medium {
+            background: rgba(255, 193, 7, 0.2);
+            color: #d39e00;
+        }
+
+        .heat-low {
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--color-success);
+        }
+
+        .allocation-matrix {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .result-proceed {
+            background: rgba(40, 167, 69, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .result-review {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: var(--color-warning);
+        }
+
+        .result-stop {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: var(--color-danger);
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        .vendor-tier {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tier-1 {
+            background: rgba(40, 167, 69, 0.15);
+            color: var(--color-success);
+        }
+
+        .tier-2 {
+            background: rgba(255, 193, 7, 0.15);
+            color: #d39e00;
+        }
+
+        .tier-3 {
+            background: rgba(220, 53, 69, 0.15);
+            color: var(--color-danger);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-accent);
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛫 Airbus Cross-Programme Resource Management Dashboard</h1>
+        <p>Framework for Managing Manpower Scarcity &amp; Outsourcing Dependencies</p>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview', event)">📊 Overview</button>
+            <button class="tab" onclick="switchTab('expertise', event)">👥 Expertise Assessment</button>
+            <button class="tab" onclick="switchTab('vendors', event)">🏢 Vendor Matrix</button>
+            <button class="tab" onclick="switchTab('allocation', event)">📋 Work Allocation</button>
+            <button class="tab" onclick="switchTab('dependency', event)">🔗 Dependency Check</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-label">Critical Experts Identified</div>
+                    <div class="metric-value">18</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 72%;"></div>
+                    </div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-label">Overloaded Programmes</div>
+                    <div class="metric-value">5</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%; background: #ffc107;"></div>
+                    </div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-label">Vendor Risk Level</div>
+                    <div class="metric-value">Medium</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%; background: #ffc107;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Expert Workload Heat Map</h2>
+                <div class="heatmap" id="heatmapContainer">
+                    <!-- heatmap will be dynamically generated -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Active Programmes Overview</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Programme</th>
+                            <th>Critical Experts</th>
+                            <th>Outsourced Tasks</th>
+                            <th>Risk Level</th>
+                            <th>Dependencies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A350 XWB</strong></td>
+                            <td>12</td>
+                            <td>47</td>
+                            <td><span class="status-badge status-yellow">Medium</span></td>
+                            <td>3 high-impact</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A320neo</strong></td>
+                            <td>8</td>
+                            <td>31</td>
+                            <td><span class="status-badge status-green">Low</span></td>
+                            <td>1 medium-impact</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A330 MRTT</strong></td>
+                            <td>10</td>
+                            <td>38</td>
+                            <td><span class="status-badge status-red">High</span></td>
+                            <td>5 high-impact</td>
+                        </tr>
+                        <tr>
+                            <td><strong>H160 Helicopter</strong></td>
+                            <td>6</td>
+                            <td>22</td>
+                            <td><span class="status-badge status-green">Low</span></td>
+                            <td>0 high-impact</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Expertise Assessment Tab -->
+        <div id="expertise" class="tab-content">
+            <div class="card">
+                <h2>Assess Internal Expert</h2>
+                <form id="expertiseForm">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Expert Name</label>
+                            <input type="text" id="expertName" placeholder="e.g., Dr. John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select id="department">
+                                <option>Aerodynamics</option>
+                                <option>Structural Engineering</option>
+                                <option>Flight Controls</option>
+                                <option>Avionics</option>
+                                <option>Propulsion</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Complexity of Tasks (1-10)</label>
+                            <input type="range" id="complexity" min="1" max="10" value="5" oninput="updateValue('complexity', this.value)">
+                            <span id="complexityValue">5</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Level of Independence (1-10)</label>
+                            <input type="range" id="independence" min="1" max="10" value="5" oninput="updateValue('independence', this.value)">
+                            <span id="independenceValue">5</span>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Cross-Programme Exposure (Number of Programmes)</label>
+                            <input type="number" id="programmes" min="1" max="10" value="2">
+                        </div>
+                        <div class="form-group">
+                            <label>Rework/Error Rate (%)</label>
+                            <input type="number" id="errorRate" min="0" max="100" value="5">
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Peer Recognition (1-10)</label>
+                            <input type="range" id="recognition" min="1" max="10" value="5" oninput="updateValue('recognition', this.value)">
+                            <span id="recognitionValue">5</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mentoring Ability (1-10)</label>
+                            <input type="range" id="mentoring" min="1" max="10" value="5" oninput="updateValue('mentoring', this.value)">
+                            <span id="mentoringValue">5</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="calculateExpertise()">Calculate Expertise Score</button>
+                </form>
+
+                <div id="expertiseResult" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Vendor Matrix Tab -->
+        <div id="vendors" class="tab-content">
+            <div class="card">
+                <h2>Vendor Capability Assessment</h2>
+                <form id="vendorForm">
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Vendor Name</label>
+                            <input type="text" id="vendorName" placeholder="e.g., AeroTech Solutions">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Category</label>
+                            <select id="serviceCategory">
+                                <option>Structural Analysis</option>
+                                <option>CAD Design</option>
+                                <option>Software Development</option>
+                                <option>Documentation</option>
+                                <option>Testing &amp; Validation</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Staff Capacity (FTE)</label>
+                            <input type="number" id="capacity" min="1" max="500" value="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Years of Experience</label>
+                            <input type="number" id="experience" min="0" max="50" value="5">
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="form-group">
+                            <label>Quality Score (Past Deliveries, 1-10)</label>
+                            <input type="range" id="quality" min="1" max="10" value="7" oninput="updateValue('quality', this.value)">
+                            <span id="qualityValue">7</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Turnaround Speed (1-10, 10=fastest)</label>
+                            <input type="range" id="speed" min="1" max="10" value="6" oninput="updateValue('speed', this.value)">
+                            <span id="speedValue">6</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Complexity Capability</label>
+                        <select id="complexityCapability">
+                            <option value="3">High - Can handle critical/complex tasks independently</option>
+                            <option value="2">Medium - Can handle moderate tasks with supervision</option>
+                            <option value="1">Low - Only basic/routine tasks</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="calculateVendorTier()">Calculate Vendor Tier</button>
+                </form>
+
+                <div id="vendorResult" style="display: none;"></div>
+            </div>
+
+            <div class="card">
+                <h2>Current Vendor Portfolio</h2>
+
+                <!-- Vendor overview injected here by JS -->
+                <div id="vendorOverview"></div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Service</th>
+                            <th>Tier</th>
+                            <th>Active Tasks</th>
+                            <th>Capacity Used</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>AeroTech Solutions</strong></td>
+                            <td>Structural Analysis</td>
+                            <td><span class="vendor-tier tier-1">Tier 1</span></td>
+                            <td>12</td>
+                            <td>75%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DesignCorp International</strong></td>
+                            <td>CAD Design</td>
+                            <td><span class="vendor-tier tier-2">Tier 2</span></td>
+                            <td>8</td>
+                            <td>45%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TechDocs Ltd</strong></td>
+                            <td>Documentation</td>
+                            <td><span class="vendor-tier tier-3">Tier 3</span></td>
+                            <td>15</td>
+                            <td>60%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precision Engineering</strong></td>
+                            <td>Testing</td>
+                            <td><span class="vendor-tier tier-1">Tier 1</span></td>
+                            <td>6</td>
+                            <td>40%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Work Allocation Tab -->
+        <div id="allocation" class="tab-content">
+            <div class="card">
+                <h2>Smart Work Allocation Rules</h2>
+                <p style="margin-bottom: 1rem; color: var(--color-text-secondary);">
+                    Match task complexity with appropriate resource capability to optimize quality and cost.
+                </p>
+
+                <div class="allocation-matrix">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Task Category</th>
+                                <th>Complexity Level</th>
+                                <th>Recommended Resource</th>
+                                <th>Supervision Required</th>
+                                <th>Example Tasks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: rgba(220, 53, 69, 0.05);">
+                                <td><strong>Category A</strong></td>
+                                <td><span class="status-badge status-red">High</span></td>
+                                <td>Internal High-Expertise Only</td>
+                                <td>❌ None</td>
+                                <td>Flight control laws, structural justification, safety-critical software</td>
+                            </tr>
+                            <tr style="background: rgba(255, 193, 7, 0.05);">
+                                <td><strong>Category B</strong></td>
+                                <td><span class="status-badge status-yellow">Medium</span></td>
+                                <td>Tier 1 Vendors or Internal Medium</td>
+                                <td>✓ 20-30% review</td>
+                                <td>System integration, performance analysis, detailed design</td>
+                            </tr>
+                            <tr style="background: rgba(40, 167, 69, 0.05);">
+                                <td><strong>Category C</strong></td>
+                                <td><span class="status-badge status-green">Low</span></td>
+                                <td>Tier 2/3 Vendors (Fully Outsource)</td>
+                                <td>❌ Minimal</td>
+                                <td>Documentation, CAD drafting, data entry, report formatting</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Task Allocation Simulator</h2>
+                <div class="form-group">
+                    <label>Task Name</label>
+                    <input type="text" id="taskName" placeholder="e.g., Wing stress analysis">
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Task Complexity</label>
+                        <select id="taskComplexity">
+                            <option value="high">High - Safety critical / Highly complex</option>
+                            <option value="medium">Medium - Requires specialized skills</option>
+                            <option value="low">Low - Routine / Repetitive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Programme</label>
+                        <select id="taskProgramme">
+                            <option>A350 XWB</option>
+                            <option>A320neo</option>
+                            <option>A330 MRTT</option>
+                            <option>H160 Helicopter</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="recommendAllocation()">Get Allocation Recommendation</button>
+
+                <div id="allocationResult" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Dependency Check Tab -->
+        <div id="dependency" class="tab-content">
+            <div class="card">
+                <h2>Portfolio Dependency Check</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--color-text-secondary);">
+                    Answer 4 critical questions before assigning any task to prevent cross-programme risks.
+                </p>
+
+                <form id="dependencyForm">
+                    <div class="form-group">
+                        <label>Task Description</label>
+                        <input type="text" id="depTaskName" placeholder="e.g., Aerodynamic simulation for A350 wing">
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Question 1:</strong> Is this task using a critical internal expert already loaded by other programmes?</label>
+                        <select id="q1" onchange="updateDependencyCheck()">
+                            <option value="">-- Select --</option>
+                            <option value="yes">Yes - Expert is overloaded (working on 4+ programmes)</option>
+                            <option value="no">No - Expert has available capacity</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Question 2:</strong> Is the vendor already overloaded from other programme tasks?</label>
+                        <select id="q2" onchange="updateDependencyCheck()">
+                            <option value="">-- Select --</option>
+                            <option value="yes">Yes - Vendor capacity &gt;80% utilized</option>
+                            <option value="no">No - Vendor has available capacity</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Question 3:</strong> Is this task too complex for outsourcing?</label>
+                        <select id="q3" onchange="updateDependencyCheck()">
+                            <option value="">-- Select --</option>
+                            <option value="yes">Yes - Requires deep expertise / safety-critical</option>
+                            <option value="no">No - Can be outsourced with supervision</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Question 4:</strong> Will this task create cross-program ripple effects?</label>
+                        <select id="q4" onchange="updateDependencyCheck()">
+                            <option value="">-- Select --</option>
+                            <option value="yes">Yes - Impacts schedules or resources of other programmes</option>
+                            <option value="no">No - Isolated to this programme only</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="runDependencyCheck()">Run Dependency Check</button>
+                </form>
+
+                <div id="dependencyResult" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching (accepts the event so we can mark active tab visually)
+        function switchTab(tabName, evt) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Update range input values
+        function updateValue(id, value) {
+            const el = document.getElementById(id + 'Value');
+            if (el) el.textContent = value;
+        }
+
+        // Calculate Expertise Score (fixed else/braces)
+        function calculateExpertise() {
+            const name = document.getElementById('expertName').value;
+            const complexity = parseInt(document.getElementById('complexity').value);
+            const independence = parseInt(document.getElementById('independence').value);
+            const programmes = parseInt(document.getElementById('programmes').value);
+            const errorRate = parseInt(document.getElementById('errorRate').value);
+            const recognition = parseInt(document.getElementById('recognition').value);
+            const mentoring = parseInt(document.getElementById('mentoring').value);
+
+            if (!name) {
+                alert('Please enter expert name');
+                return;
+            }
+
+            // Calculate weighted score (normalized to 0-10)
+            const programmeFactor = (programmes > 3 ? 10 : programmes * 2.5);
+            const score = (
+                complexity * 0.25 +
+                independence * 0.2 +
+                programmeFactor * 0.15 +
+                (10 - errorRate / 10) * 0.15 +
+                recognition * 0.15 +
+                mentoring * 0.1
+            ) / 1.0; // already scaled roughly 0-10
+
+            let classification, statusClass, recommendation;
+
+            if (score >= 8) {
+                classification = 'High Expertise (Critical Resource)';
+                statusClass = 'status-red';
+                recommendation = '⚠️ <strong>Protect this resource:</strong> Limit to max 3 programmes. Consider mentoring junior staff to distribute knowledge. Monitor workload closely.';
+            } else if (score >= 5.5) {
+                classification = 'Medium Expertise (Capable with Supervision)';
+                statusClass = 'status-yellow';
+                recommendation = '✓ <strong>Capable resource:</strong> Can handle medium-complexity tasks independently. Suitable for supervised outsourcing review. Can mentor on specific topics.';
+            } else {
+                classification = 'Low Expertise (Needs Support)';
+                statusClass = 'status-green';
+                recommendation = '📚 <strong>Development needed:</strong> Assign to routine tasks with senior oversight. Provide training opportunities. Pair with high-expertise mentors.';
+            }
+
+            const resultHTML = `
+                <div class="result-box ${statusClass === 'status-red' ? 'result-stop' : statusClass === 'status-yellow' ? 'result-review' : 'result-proceed'}">
+                    <h3 style="margin-bottom: 1rem;">Assessment Results for ${name}</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Expertise Score:</strong> ${score.toFixed(1)}/10<br>
+                        <strong>Classification:</strong> <span class="status-badge ${statusClass}">${classification}</span>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1);">
+                        ${recommendation}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('expertiseResult').innerHTML = resultHTML;
+            document.getElementById('expertiseResult').style.display = 'block';
+        }
+
+        // Calculate Vendor Tier
+        function calculateVendorTier() {
+            const name = document.getElementById('vendorName').value;
+            const capacity = parseInt(document.getElementById('capacity').value);
+            const experience = parseInt(document.getElementById('experience').value);
+            const quality = parseInt(document.getElementById('quality').value);
+            const speed = parseInt(document.getElementById('speed').value);
+            const complexity = parseInt(document.getElementById('complexityCapability').value);
+
+            if (!name) {
+                alert('Please enter vendor name');
+                return;
+            }
+
+            // Calculate vendor score
+            const capacityScore = Math.min(capacity / 50, 10);
+            const expScore = Math.min(experience / 5, 10);
+            const score = (
+                capacityScore * 0.15 +
+                expScore * 0.2 +
+                quality * 0.25 +
+                speed * 0.15 +
+                complexity * 3.33 * 0.25
+            );
+
+            let tier, tierClass, tasks, supervision;
+
+            if (score >= 7.5) {
+                tier = 'Tier 1';
+                tierClass = 'tier-1';
+                tasks = 'Can handle independent complex work, including medium-complexity tasks without supervision';
+                supervision = 'Minimal oversight required';
+            } else if (score >= 5) {
+                tier = 'Tier 2';
+                tierClass = 'tier-2';
+                tasks = 'Medium complexity tasks with 20-30% review by internal experts';
+                supervision = 'Regular quality checks needed';
+            } else {
+                tier = 'Tier 3';
+                tierClass = 'tier-3';
+                tasks = 'Only basic/routine tasks such as documentation, data entry, simple drafting';
+                supervision = 'Close supervision required';
+            }
+
+            const resultHTML = `
+                <div class="result-box ${tier === 'Tier 1' ? 'result-proceed' : tier === 'Tier 2' ? 'result-review' : 'result-stop'}">
+                    <h3 style="margin-bottom: 1rem;">Vendor Assessment for ${name}</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Capability Score:</strong> ${score.toFixed(1)}/10<br>
+                        <strong>Classification:</strong> <span class="vendor-tier ${tierClass}">${tier}</span>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <strong>Suitable Tasks:</strong> ${tasks}<br>
+                        <strong>Supervision Level:</strong> ${supervision}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('vendorResult').innerHTML = resultHTML;
+            document.getElementById('vendorResult').style.display = 'block';
+        }
+
+        // Task Allocation Recommendation
+        function recommendAllocation() {
+            const taskName = document.getElementById('taskName').value;
+            const complexity = document.getElementById('taskComplexity').value;
+            const programme = document.getElementById('taskProgramme').value;
+
+            if (!taskName) {
+                alert('Please enter task name');
+                return;
+            }
+
+            let category, resource, supervision, risk, resultClass;
+
+            if (complexity === 'high') {
+                category = 'Category A';
+                resource = 'Internal High-Expertise Engineers Only';
+                supervision = 'No outsourcing permitted for safety-critical work';
+                risk = 'HIGH - Must use internal experts';
+                resultClass = 'result-stop';
+            } else if (complexity === 'medium') {
+                category = 'Category B';
+                resource = 'Tier 1 Vendors OR Internal Medium-Expertise';
+                supervision = '20-30% review required by internal expert';
+                risk = 'MEDIUM - Can outsource with supervision';
+                resultClass = 'result-review';
+            } else {
+                category = 'Category C';
+                resource = 'Tier 2 or Tier 3 Vendors (Fully Outsource)';
+                supervision = 'Minimal oversight needed';
+                risk = 'LOW - Safe to fully outsource';
+                resultClass = 'result-proceed';
+            }
+
+            const resultHTML = `
+                <div class="result-box ${resultClass}">
+                    <h3 style="margin-bottom: 1rem;">Allocation Recommendation</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Task:</strong> ${taskName}<br>
+                        <strong>Programme:</strong> ${programme}<br>
+                        <strong>Complexity:</strong> ${complexity.toUpperCase()}<br>
+                        <strong>Allocation Category:</strong> ${category}
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <strong>✓ Recommended Resource:</strong> ${resource}<br>
+                        <strong>📋 Supervision Level:</strong> ${supervision}<br>
+                        <strong>⚠️ Risk Level:</strong> ${risk}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('allocationResult').innerHTML = resultHTML;
+            document.getElementById('allocationResult').style.display = 'block';
+        }
+
+        // Dependency Check
+        function runDependencyCheck() {
+            const taskName = document.getElementById('depTaskName').value;
+            const q1 = document.getElementById('q1').value;
+            const q2 = document.getElementById('q2').value;
+            const q3 = document.getElementById('q3').value;
+            const q4 = document.getElementById('q4').value;
+
+            if (!taskName || !q1 || !q2 || !q3 || !q4) {
+                alert('Please answer all 4 questions');
+                return;
+            }
+
+            let status, statusBadge, decision, actions, resultClass;
+            const issues = [];
+
+            if (q1 === 'yes') issues.push('Critical expert overload detected');
+            if (q2 === 'yes') issues.push('Vendor capacity exceeded');
+            if (q3 === 'yes') issues.push('Task too complex for outsourcing');
+            if (q4 === 'yes') issues.push('Cross-programme ripple effects identified');
+
+            if (issues.length === 0) {
+                status = 'GREEN - Proceed';
+                statusBadge = 'status-green';
+                decision = '✅ Task can proceed as planned';
+                actions = 'No cross-programme dependencies detected. Assign task to selected resource and monitor progress normally.';
+                resultClass = 'result-proceed';
+            } else if (issues.length <= 2) {
+                status = 'YELLOW - Requires Review';
+                statusBadge = 'status-yellow';
+                decision = '⚠️ Task requires Portfolio PMO review before proceeding';
+                actions = '<strong>Detected Issues:</strong><ul style="margin: 0.5rem 0;">' +
+                    issues.map(i => `<li>${i}</li>`).join('') +
+                    '</ul><strong>Actions:</strong><br>';
+
+                if (q1 === 'yes') actions += '• Consider delaying or reassigning to prevent expert bottleneck<br>';
+                if (q2 === 'yes') actions += '• Evaluate alternative vendors or adjust timeline<br>';
+                if (q3 === 'yes') actions += '• Convert to supervised internal work with expert review<br>';
+                if (q4 === 'yes') actions += '• Coordinate with affected programmes before proceeding<br>';
+
+                resultClass = 'result-review';
+            } else {
+                status = 'RED - Cannot Proceed';
+                statusBadge = 'status-red';
+                decision = '🛑 Task BLOCKED - High risk of cross-programme failure';
+                actions = '<strong>Critical Issues:</strong><ul style="margin: 0.5rem 0;">' +
+                    issues.map(i => `<li>${i}</li>`).join('') +
+                    '</ul><strong>Required Actions:</strong><br>' +
+                    '• Escalate to Portfolio PMO immediately<br>' +
+                    '• Reassess task priority and timeline<br>' +
+                    '• Identify alternative resources or approach<br>' +
+                    '• Do NOT assign until dependencies resolved';
+                resultClass = 'result-stop';
+            }
+
+            const resultHTML = `
+                <div class="result-box ${resultClass}">
+                    <h3 style="margin-bottom: 1rem;">Dependency Check Results</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Task:</strong> ${taskName}<br>
+                        <strong>Status:</strong> <span class="status-badge ${statusBadge}">${status}</span>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <strong>${decision}</strong><br><br>
+                        ${actions}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('dependencyResult').innerHTML = resultHTML;
+            document.getElementById('dependencyResult').style.display = 'block';
+        }
+
+        function updateDependencyCheck() {
+            // Could add real-time feedback as users answer questions
+        }
+    </script>
+
+    <script>
+    // ============================
+    // LOAD JIRA MOCK DATA
+    // ============================
+    let jiraData = null;
+
+    fetch("jira_mock.json")
+      .then(res => res.json())
+      .then(data => {
+        jiraData = data;
+        populateHeatmap();
+        populateVendorPanel();
+      })
+      .catch(err => {
+        console.warn("jira_mock.json not found or failed to load. Heatmap will remain static.", err);
+      });
+
+    // ============================
+    // POPULATE HEATMAP (dynamic based on jiraData.programmes)
+    // ============================
+    function populateHeatmap() {
+      if (!jiraData) return;
+
+      const programmes = jiraData.programmes || [];
+      const engineers = jiraData.engineers || [];
+      const heatmapDiv = document.getElementById("heatmapContainer");
+
+      // Build CSS grid columns: 150px (label) + one 1fr per programme + 150px (status)
+      const cols = "150px " + programmes.map(() => "1fr").join(" ") + " 150px";
+      heatmapDiv.style.gridTemplateColumns = cols;
+
+      // Build header row
+      heatmapDiv.innerHTML = "";
+      heatmapDiv.innerHTML += `<div class="heatmap-cell heatmap-header">Expert Name</div>`;
+      programmes.forEach(p => {
+        heatmapDiv.innerHTML += `<div class="heatmap-cell heatmap-header">${p.name}</div>`;
+      });
+      heatmapDiv.innerHTML += `<div class="heatmap-cell heatmap-header">Status</div>`;
+
+      // Add one full row per engineer (always same number of cells)
+      engineers.forEach(eng => {
+        // Expert name cell
+        heatmapDiv.innerHTML += `<div class="heatmap-cell heatmap-label">${eng.name}</div>`;
+
+        // One workload cell per programme (if missing -> 0 or dash)
+        programmes.forEach(p => {
+          const key = p.id;
+          const val = (eng.workload && typeof eng.workload[key] !== "undefined") ? eng.workload[key] : 0;
+          const className = colorClass(val);
+          const display = (val === 0 ? "—" : `${val}%`);
+          heatmapDiv.innerHTML += `<div class="heatmap-cell ${className}">${display}</div>`;
+        });
+
+        // Status cell computed from max workload across programmes
+        const maxLoad = Math.max(...programmes.map(p => (eng.workload && eng.workload[p.id]) || 0));
+        let status = `<span class="status-badge status-green">Available</span>`;
+        if (maxLoad > 80) status = `<span class="status-badge status-red">Critical</span>`;
+        else if (maxLoad > 50) status = `<span class="status-badge status-yellow">Watch</span>`;
+
+        heatmapDiv.innerHTML += `<div class="heatmap-cell">${status}</div>`;
+      });
+    }
+
+    function colorClass(val) {
+      if (val > 70) return "heat-high";
+      if (val > 40) return "heat-medium";
+      return "heat-low";
+    }
+
+    // ============================
+    // POPULATE VENDOR PANEL (uses vendorOverview element)
+    // ============================
+    function populateVendorPanel() {
+      if (!jiraData) return;
+      const vendors = jiraData.vendors || [];
+      const vendorOverview = document.getElementById("vendorOverview");
+
+      let html = "<h3 style='margin-top:0'>Vendors (from mock Jira)</h3>";
+      vendors.forEach(v => {
+        // Score example: combine quality (1-10) and capacity (percentage) into a 0-10-like scale
+        const capacityScore = Math.max(0, Math.min(10, (100 - v.capacity) / 10)); // lower used capacity => higher score
+        const score = ((v.quality) * 0.6 + capacityScore * 0.4);
+        let tier = "Tier 3";
+        let tierClass = "tier-3";
+        if (score >= 7) { tier = "Tier 1"; tierClass = "tier-1"; }
+        else if (score >= 5) { tier = "Tier 2"; tierClass = "tier-2"; }
+
+        html += `
+          <div style="margin:8px 0; padding:8px; border:1px solid #ddd; border-radius:6px; background:#fff;">
+            <strong>${v.name}</strong> — <em>${(v.programmes || []).join(", ")}</em><br>
+            Quality: ${v.quality}/10 • Capacity used: ${v.capacity}% • <span class="vendor-tier ${tierClass}">${tier}</span>
+          </div>
+        `;
+      });
+
+      vendorOverview.innerHTML = html;
+    }
+    </script>
+
+</body>
+</html>
